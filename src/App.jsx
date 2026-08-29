@@ -16,25 +16,25 @@ import TuitionStages from "./components/sections/TuitionStages";
 
 import EnquiryManager from "./components/enquiry/EnquiryManager";
 
-import AdminDashboard from "./components/admin/AdminDashboard";
+// IMPORTANT:
+// Use the Admin page, not AdminDashboard directly.
+import Admin from "./pages/Admin";
 
 
 function App() {
+
+  /*
+  ============================================================
+  ADMIN ROUTE
+  ============================================================
+  */
 
   const isAdminPage =
     window.location.pathname === "/admin";
 
 
-  /*
-  ============================================================
-  ADMIN PAGE
-  ============================================================
-  */
-
   if (isAdminPage) {
-    return (
-      <AdminDashboard />
-    );
+    return <Admin />;
   }
 
 
@@ -46,7 +46,6 @@ function App() {
 
   return (
     <>
-
       <Navbar />
 
       <main>
@@ -82,8 +81,6 @@ function App() {
 
       {/* =====================================================
           GLOBAL ENQUIRY POPUP
-
-          One popup shared by every CTA on the website.
       ===================================================== */}
 
       <EnquiryManager />

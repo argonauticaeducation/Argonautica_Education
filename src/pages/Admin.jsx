@@ -7,6 +7,7 @@ import AdminDashboard from "../components/admin/AdminDashboard";
 
 
 const Admin = () => {
+
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -17,7 +18,12 @@ const Admin = () => {
 
       const {
         data: { session },
+        error,
       } = await supabase.auth.getSession();
+
+      if (error) {
+        console.error("Session error:", error);
+      }
 
       setUser(session?.user || null);
       setLoading(false);
@@ -45,10 +51,19 @@ const Admin = () => {
   }, []);
 
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+
+    await supabase.auth.signOut();
+
     setUser(null);
   };
 
+
+  /*
+  ============================================================
+  LOADING
+  ============================================================
+  */
 
   if (loading) {
 
@@ -72,6 +87,12 @@ const Admin = () => {
   }
 
 
+  /*
+  ============================================================
+  NOT LOGGED IN
+  ============================================================
+  */
+
   if (!user) {
 
     return (
@@ -84,6 +105,12 @@ const Admin = () => {
 
   }
 
+
+  /*
+  ============================================================
+  LOGGED IN
+  ============================================================
+  */
 
   return (
     <AdminDashboard
