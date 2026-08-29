@@ -13,6 +13,7 @@ import {
   ChevronDown,
   StickyNote,
   Save,
+  Trash2,
 } from "lucide-react";
 
 import * as XLSX from "xlsx";
@@ -20,12 +21,20 @@ import * as XLSX from "xlsx";
 import { supabase } from "../../lib/supabase";
 
 
+// ============================================================
+// STATUS OPTIONS
+// ============================================================
+
 const STATUS_OPTIONS = [
   "New",
   "Contacted",
   "Completed",
 ];
 
+
+// ============================================================
+// ADMIN DASHBOARD
+// ============================================================
 
 const AdminDashboard = ({ user, onLogout }) => {
   const [enquiries, setEnquiries] = useState([]);
@@ -43,6 +52,9 @@ const AdminDashboard = ({ user, onLogout }) => {
   const [editingNoteId, setEditingNoteId] = useState(null);
   const [noteValue, setNoteValue] = useState("");
   const [savingNoteId, setSavingNoteId] = useState(null);
+
+  // DELETE STATE
+  const [deletingId, setDeletingId] = useState(null);
 
 
   // =========================================================
@@ -63,6 +75,11 @@ const AdminDashboard = ({ user, onLogout }) => {
 
     if (error) {
       console.error("Error fetching enquiries:", error);
+
+      alert(
+        error.message ||
+          "Unable to load enquiries."
+      );
     } else {
       setEnquiries(data || []);
     }
@@ -100,7 +117,7 @@ const AdminDashboard = ({ user, onLogout }) => {
 
       alert(
         error.message ||
-        "Unable to update enquiry status."
+          "Unable to update enquiry status."
       );
 
       setUpdatingId(null);
@@ -163,7 +180,7 @@ const AdminDashboard = ({ user, onLogout }) => {
 
       alert(
         error.message ||
-        "Unable to save note."
+          "Unable to save note."
       );
 
       setSavingNoteId(null);
@@ -188,11 +205,69 @@ const AdminDashboard = ({ user, onLogout }) => {
 
 
   // =========================================================
+  // DELETE ENQUIRY
+  // =========================================================
+
+  const deleteEnquiry = async (id) => {
+    const enquiry = enquiries.find(
+      (item) => item.id === id
+    );
+
+    if (!enquiry) {
+      return;
+    }
+
+    const confirmed = window.confirm(
+      `Are you sure you want to delete the enquiry from "${enquiry.name}"?\n\nThis action cannot be undone.`
+    );
+
+    if (!confirmed) {
+      return;
+    }
+
+    setDeletingId(id);
+
+    const { error } = await supabase
+      .from("enquiries")
+      .delete()
+      .eq("id", id);
+
+    if (error) {
+      console.error("Delete enquiry error:", error);
+
+      alert(
+        error.message ||
+          "Unable to delete enquiry."
+      );
+
+      setDeletingId(null);
+      return;
+    }
+
+    // Remove deleted enquiry from local state
+    setEnquiries((current) =>
+      current.filter(
+        (item) => item.id !== id
+      )
+    );
+
+    // Close note editor if deleting edited enquiry
+    if (editingNoteId === id) {
+      setEditingNoteId(null);
+      setNoteValue("");
+    }
+
+    setDeletingId(null);
+  };
+
+
+  // =========================================================
   // LOGOUT
   // =========================================================
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
+
     onLogout();
   };
 
@@ -202,10 +277,11 @@ const AdminDashboard = ({ user, onLogout }) => {
   // =========================================================
 
   const filteredEnquiries = useMemo(() => {
-    const searchValue = search.trim().toLowerCase();
+    const searchValue = search
+      .trim()
+      .toLowerCase();
 
     return enquiries.filter((enquiry) => {
-
       const matchesSearch =
         !searchValue ||
         String(enquiry.name || "")
@@ -227,8 +303,11 @@ const AdminDashboard = ({ user, onLogout }) => {
 
       return matchesSearch && matchesStatus;
     });
-
-  }, [enquiries, search, statusFilter]);
+  }, [
+    enquiries,
+    search,
+    statusFilter,
+  ]);
 
 
   // =========================================================
@@ -255,16 +334,16 @@ const AdminDashboard = ({ user, onLogout }) => {
   // =========================================================
 
   const getExportData = () => {
-
-    return filteredEnquiries.map((enquiry) => ({
-      ID: enquiry.id || "",
-      Name: enquiry.name || "",
-      Phone: enquiry.phone || "",
-      Year: enquiry.year_level || "",
-      Status: enquiry.status || "",
-      Notes: enquiry.notes || "",
-    }));
-
+    return filteredEnquiries.map(
+      (enquiry) => ({
+        ID: enquiry.id || "",
+        Name: enquiry.name || "",
+        Phone: enquiry.phone || "",
+        Year: enquiry.year_level || "",
+        Status: enquiry.status || "",
+        Notes: enquiry.notes || "",
+      })
+    );
   };
 
 
@@ -273,39 +352,34 @@ const AdminDashboard = ({ user, onLogout }) => {
   // =========================================================
 
   const exportToCSV = () => {
-
     const rows = getExportData();
 
     if (rows.length === 0) {
-      alert("There are no enquiries to export.");
+      alert(
+        "There are no enquiries to export."
+      );
       return;
     }
 
-
     const headers = Object.keys(rows[0]);
 
-
     const csvRows = rows.map((row) => {
-
       return headers
         .map((header) => {
-
           const value = row[header] ?? "";
 
-          return `"${String(value)
-            .replace(/"/g, '""')}"`;
-
+          return `"${String(value).replace(
+            /"/g,
+            '""'
+          )}"`;
         })
         .join(",");
-
     });
-
 
     const csvContent = [
       headers.join(","),
       ...csvRows,
     ].join("\n");
-
 
     const blob = new Blob(
       [csvContent],
@@ -314,10 +388,11 @@ const AdminDashboard = ({ user, onLogout }) => {
       }
     );
 
+    const url =
+      URL.createObjectURL(blob);
 
-    const url = URL.createObjectURL(blob);
-
-    const link = document.createElement("a");
+    const link =
+      document.createElement("a");
 
     link.href = url;
 
@@ -343,18 +418,17 @@ const AdminDashboard = ({ user, onLogout }) => {
   // =========================================================
 
   const exportToExcel = () => {
-
     const rows = getExportData();
 
     if (rows.length === 0) {
-      alert("There are no enquiries to export.");
+      alert(
+        "There are no enquiries to export."
+      );
       return;
     }
 
-
     const worksheet =
       XLSX.utils.json_to_sheet(rows);
-
 
     worksheet["!cols"] = [
       { wch: 38 },
@@ -365,17 +439,14 @@ const AdminDashboard = ({ user, onLogout }) => {
       { wch: 45 },
     ];
 
-
     const workbook =
       XLSX.utils.book_new();
-
 
     XLSX.utils.book_append_sheet(
       workbook,
       worksheet,
       "Enquiries"
     );
-
 
     XLSX.writeFile(
       workbook,
@@ -384,10 +455,13 @@ const AdminDashboard = ({ user, onLogout }) => {
         .slice(0, 10)}.xlsx`
     );
 
-
     setExportOpen(false);
   };
 
+
+  // =========================================================
+  // RETURN
+  // =========================================================
 
   return (
     <div className="min-h-screen bg-[#f5f3ed]">
@@ -403,7 +477,6 @@ const AdminDashboard = ({ user, onLogout }) => {
           bg-white
         "
       >
-
         <div
           className="
             mx-auto
@@ -417,8 +490,9 @@ const AdminDashboard = ({ user, onLogout }) => {
           "
         >
 
-          <div>
+          {/* BRAND */}
 
+          <div>
             <h1
               className="
                 text-[25px]
@@ -440,9 +514,10 @@ const AdminDashboard = ({ user, onLogout }) => {
             >
               Enquiry Management
             </p>
-
           </div>
 
+
+          {/* USER / LOGOUT */}
 
           <div className="flex items-center gap-[14px]">
 
@@ -457,7 +532,6 @@ const AdminDashboard = ({ user, onLogout }) => {
             >
               {user?.email}
             </span>
-
 
             <button
               type="button"
@@ -487,7 +561,6 @@ const AdminDashboard = ({ user, onLogout }) => {
           </div>
 
         </div>
-
       </header>
 
 
@@ -528,7 +601,8 @@ const AdminDashboard = ({ user, onLogout }) => {
               text-[#777c90]
             "
           >
-            Manage enquiries submitted through the website.
+            Manage enquiries submitted through
+            the website.
           </p>
 
         </div>
@@ -559,11 +633,9 @@ const AdminDashboard = ({ user, onLogout }) => {
               p-[20px]
             "
           >
-
             <div className="flex items-center justify-between">
 
               <div>
-
                 <p
                   className="
                     text-[13px]
@@ -584,7 +656,6 @@ const AdminDashboard = ({ user, onLogout }) => {
                 >
                   {total}
                 </p>
-
               </div>
 
               <div
@@ -603,7 +674,6 @@ const AdminDashboard = ({ user, onLogout }) => {
               </div>
 
             </div>
-
           </div>
 
 
@@ -618,11 +688,9 @@ const AdminDashboard = ({ user, onLogout }) => {
               p-[20px]
             "
           >
-
             <div className="flex items-center justify-between">
 
               <div>
-
                 <p
                   className="
                     text-[13px]
@@ -643,7 +711,6 @@ const AdminDashboard = ({ user, onLogout }) => {
                 >
                   {newCount}
                 </p>
-
               </div>
 
               <div
@@ -662,7 +729,6 @@ const AdminDashboard = ({ user, onLogout }) => {
               </div>
 
             </div>
-
           </div>
 
 
@@ -677,11 +743,9 @@ const AdminDashboard = ({ user, onLogout }) => {
               p-[20px]
             "
           >
-
             <div className="flex items-center justify-between">
 
               <div>
-
                 <p
                   className="
                     text-[13px]
@@ -702,7 +766,6 @@ const AdminDashboard = ({ user, onLogout }) => {
                 >
                   {contactedCount}
                 </p>
-
               </div>
 
               <div
@@ -721,7 +784,6 @@ const AdminDashboard = ({ user, onLogout }) => {
               </div>
 
             </div>
-
           </div>
 
 
@@ -736,11 +798,9 @@ const AdminDashboard = ({ user, onLogout }) => {
               p-[20px]
             "
           >
-
             <div className="flex items-center justify-between">
 
               <div>
-
                 <p
                   className="
                     text-[13px]
@@ -761,7 +821,6 @@ const AdminDashboard = ({ user, onLogout }) => {
                 >
                   {completedCount}
                 </p>
-
               </div>
 
               <div
@@ -780,7 +839,6 @@ const AdminDashboard = ({ user, onLogout }) => {
               </div>
 
             </div>
-
           </div>
 
         </div>
@@ -831,7 +889,9 @@ const AdminDashboard = ({ user, onLogout }) => {
             <input
               type="text"
               value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={(e) =>
+                setSearch(e.target.value)
+              }
               placeholder="Search name, phone, year or note..."
               className="
                 h-[43px]
@@ -883,19 +943,20 @@ const AdminDashboard = ({ user, onLogout }) => {
                 focus:border-[#dfa92f]
               "
             >
-
               <option value="All">
                 All statuses
               </option>
 
-              {STATUS_OPTIONS.map((status) => (
-                <option
-                  key={status}
-                  value={status}
-                >
-                  {status}
-                </option>
-              ))}
+              {STATUS_OPTIONS.map(
+                (status) => (
+                  <option
+                    key={status}
+                    value={status}
+                  >
+                    {status}
+                  </option>
+                )
+              )}
 
             </select>
 
@@ -907,9 +968,13 @@ const AdminDashboard = ({ user, onLogout }) => {
               <button
                 type="button"
                 onClick={() =>
-                  setExportOpen((current) => !current)
+                  setExportOpen(
+                    (current) => !current
+                  )
                 }
-                disabled={filteredEnquiries.length === 0}
+                disabled={
+                  filteredEnquiries.length === 0
+                }
                 className="
                   flex
                   h-[43px]
@@ -938,7 +1003,11 @@ const AdminDashboard = ({ user, onLogout }) => {
                   className={`
                     transition-transform
                     duration-200
-                    ${exportOpen ? "rotate-180" : ""}
+                    ${
+                      exportOpen
+                        ? "rotate-180"
+                        : ""
+                    }
                   `}
                 />
 
@@ -982,13 +1051,11 @@ const AdminDashboard = ({ user, onLogout }) => {
                       hover:bg-[#f7f4ec]
                     "
                   >
-
                     <Download size={16} />
 
                     <span>
                       Export CSV
                     </span>
-
                   </button>
 
 
@@ -1011,7 +1078,6 @@ const AdminDashboard = ({ user, onLogout }) => {
                       hover:bg-[#f7f4ec]
                     "
                   >
-
                     <FileSpreadsheet
                       size={16}
                       className="text-[#28663d]"
@@ -1020,7 +1086,6 @@ const AdminDashboard = ({ user, onLogout }) => {
                     <span>
                       Export Excel
                     </span>
-
                   </button>
 
                 </div>
@@ -1033,7 +1098,9 @@ const AdminDashboard = ({ user, onLogout }) => {
 
             <button
               type="button"
-              onClick={() => fetchEnquiries(true)}
+              onClick={() =>
+                fetchEnquiries(true)
+              }
               disabled={refreshing}
               className="
                 flex
@@ -1122,7 +1189,12 @@ const AdminDashboard = ({ user, onLogout }) => {
 
             <div className="overflow-x-auto">
 
-              <table className="w-full min-w-[1050px]">
+              <table
+                className="
+                  w-full
+                  min-w-[1200px]
+                "
+              >
 
                 <thead>
 
@@ -1152,6 +1224,12 @@ const AdminDashboard = ({ user, onLogout }) => {
 
                     <th className="px-[18px] py-[14px] text-left text-[12px] font-bold uppercase tracking-[0.5px] text-[#777c90]">
                       Notes
+                    </th>
+
+                    {/* NEW ACTION COLUMN */}
+
+                    <th className="px-[18px] py-[14px] text-center text-[12px] font-bold uppercase tracking-[0.5px] text-[#777c90]">
+                      Actions
                     </th>
 
                   </tr>
@@ -1227,10 +1305,12 @@ const AdminDashboard = ({ user, onLogout }) => {
 
                           <select
                             value={
-                              enquiry.status || "New"
+                              enquiry.status ||
+                              "New"
                             }
                             disabled={
-                              updatingId === enquiry.id
+                              updatingId ===
+                              enquiry.id
                             }
                             onChange={(e) =>
                               updateStatus(
@@ -1274,7 +1354,8 @@ const AdminDashboard = ({ user, onLogout }) => {
 
                         <td className="px-[18px] py-[17px]">
 
-                          {editingNoteId === enquiry.id ? (
+                          {editingNoteId ===
+                          enquiry.id ? (
 
                             <div
                               className="
@@ -1459,6 +1540,71 @@ const AdminDashboard = ({ user, onLogout }) => {
 
                         </td>
 
+
+                        {/* =================================================
+                            DELETE ACTION
+                        ================================================= */}
+
+                        <td className="px-[18px] py-[17px]">
+
+                          <div className="flex justify-center">
+
+                            <button
+                              type="button"
+                              onClick={() =>
+                                deleteEnquiry(
+                                  enquiry.id
+                                )
+                              }
+                              disabled={
+                                deletingId ===
+                                enquiry.id
+                              }
+                              title="Delete enquiry"
+                              aria-label={`Delete enquiry from ${enquiry.name}`}
+                              className="
+                                flex
+                                h-[36px]
+                                w-[36px]
+                                items-center
+                                justify-center
+                                rounded-[7px]
+                                border
+                                border-[#efcaca]
+                                bg-[#fff7f7]
+                                text-[#c43d3d]
+                                transition-all
+                                duration-150
+                                hover:border-[#e3a7a7]
+                                hover:bg-[#fdeaea]
+                                hover:text-[#a92d2d]
+                                disabled:cursor-not-allowed
+                                disabled:opacity-50
+                              "
+                            >
+
+                              {deletingId ===
+                              enquiry.id ? (
+
+                                <RefreshCw
+                                  size={16}
+                                  className="animate-spin"
+                                />
+
+                              ) : (
+
+                                <Trash2
+                                  size={16}
+                                />
+
+                              )}
+
+                            </button>
+
+                          </div>
+
+                        </td>
+
                       </tr>
 
                     )
@@ -1479,45 +1625,50 @@ const AdminDashboard = ({ user, onLogout }) => {
             FOOTER INFORMATION
         ================================================= */}
 
-        {!loading && filteredEnquiries.length > 0 && (
+        {!loading &&
+          filteredEnquiries.length > 0 && (
 
-          <div
-            className="
-              mt-[12px]
-              flex
-              flex-col
-              gap-[5px]
-              sm:flex-row
-              sm:items-center
-              sm:justify-between
-            "
-          >
-
-            <p
+            <div
               className="
-                text-[11px]
-                font-medium
-                text-[#85899a]
+                mt-[12px]
+                flex
+                flex-col
+                gap-[5px]
+                sm:flex-row
+                sm:items-center
+                sm:justify-between
               "
             >
-              Click any note to add or edit follow-up information.
-            </p>
 
-            <p
-              className="
-                text-right
-                text-[12px]
-                font-medium
-                text-[#85899a]
-              "
-            >
-              Showing {filteredEnquiries.length} of{" "}
-              {enquiries.length} enquiries
-            </p>
+              <p
+                className="
+                  text-[11px]
+                  font-medium
+                  text-[#85899a]
+                "
+              >
+                Click any note to add or edit
+                follow-up information.
+              </p>
 
-          </div>
+              <p
+                className="
+                  text-right
+                  text-[12px]
+                  font-medium
+                  text-[#85899a]
+                "
+              >
+                Showing{" "}
+                {filteredEnquiries.length}{" "}
+                of{" "}
+                {enquiries.length}{" "}
+                enquiries
+              </p>
 
-        )}
+            </div>
+
+          )}
 
       </main>
 
