@@ -308,10 +308,15 @@ const AdminDashboard = ({ user, onLogout }) => {
   // ==========================================================
 
   const handleLogout = async () => {
+  try {
     await supabase.auth.signOut();
-
+  } catch (error) {
+    console.error("Logout error:", error);
+  } finally {
     onLogout();
-  };
+    window.location.href = "/";
+  }
+};
 
 
   // ==========================================================
