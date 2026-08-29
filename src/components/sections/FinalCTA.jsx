@@ -1,5 +1,5 @@
 import { Anchor, Mail } from "lucide-react";
-import { FaInstagram, FaLinkedinIn } from "react-icons/fa";
+import { FaYoutube, FaLinkedinIn } from "react-icons/fa";
 
 import "./FinalCTA.css";
 
@@ -87,20 +87,20 @@ const FinalCTA = () => {
             {/* Instagram */}
 
             <a
-              href="https://www.instagram.com/"
+              href="https://www.youtube.com/@Argonautica.Education"
               target="_blank"
               rel="noopener noreferrer"
               className="site-footer-icon-link"
               aria-label="Instagram"
             >
-              <FaInstagram />
+              <FaYoutube />
             </a>
 
 
             {/* LinkedIn */}
 
             <a
-              href="https://www.linkedin.com/"
+              href="https://www.linkedin.com/company/argonautica-education/"
               target="_blank"
               rel="noopener noreferrer"
               className="site-footer-icon-link"
@@ -113,7 +113,7 @@ const FinalCTA = () => {
             {/* Email */}
 
             <a
-              href="mailto:hello@argonauticaeducation.com"
+              href="mailto:argonautica.education@gmail.com"
               className="site-footer-icon-link"
               aria-label="Email"
             >
