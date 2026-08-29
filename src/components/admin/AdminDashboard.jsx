@@ -14,6 +14,8 @@ import {
   StickyNote,
   Save,
   Trash2,
+  X,
+  AlertTriangle,
 } from "lucide-react";
 
 import * as XLSX from "xlsx";
@@ -53,13 +55,17 @@ const AdminDashboard = ({ user, onLogout }) => {
   const [noteValue, setNoteValue] = useState("");
   const [savingNoteId, setSavingNoteId] = useState(null);
 
+  // ==========================================================
   // DELETE STATE
+  // ==========================================================
+
   const [deletingId, setDeletingId] = useState(null);
+  const [deleteTarget, setDeleteTarget] = useState(null);
 
 
-  // =========================================================
+  // ==========================================================
   // FETCH ENQUIRIES
-  // =========================================================
+  // ==========================================================
 
   const fetchEnquiries = async (showRefresh = false) => {
     if (showRefresh) {
@@ -74,7 +80,10 @@ const AdminDashboard = ({ user, onLogout }) => {
       .order("id", { ascending: false });
 
     if (error) {
-      console.error("Error fetching enquiries:", error);
+      console.error(
+        "Error fetching enquiries:",
+        error
+      );
 
       alert(
         error.message ||
@@ -89,18 +98,18 @@ const AdminDashboard = ({ user, onLogout }) => {
   };
 
 
-  // =========================================================
+  // ==========================================================
   // INITIAL LOAD
-  // =========================================================
+  // ==========================================================
 
   useEffect(() => {
     fetchEnquiries();
   }, []);
 
 
-  // =========================================================
+  // ==========================================================
   // UPDATE STATUS
-  // =========================================================
+  // ==========================================================
 
   const updateStatus = async (id, status) => {
     setUpdatingId(id);
@@ -113,7 +122,10 @@ const AdminDashboard = ({ user, onLogout }) => {
       .eq("id", id);
 
     if (error) {
-      console.error("Status update error:", error);
+      console.error(
+        "Status update error:",
+        error
+      );
 
       alert(
         error.message ||
@@ -139,9 +151,9 @@ const AdminDashboard = ({ user, onLogout }) => {
   };
 
 
-  // =========================================================
+  // ==========================================================
   // START NOTE EDITING
-  // =========================================================
+  // ==========================================================
 
   const startEditingNote = (enquiry) => {
     setEditingNoteId(enquiry.id);
@@ -149,9 +161,9 @@ const AdminDashboard = ({ user, onLogout }) => {
   };
 
 
-  // =========================================================
+  // ==========================================================
   // CANCEL NOTE EDITING
-  // =========================================================
+  // ==========================================================
 
   const cancelEditingNote = () => {
     setEditingNoteId(null);
@@ -159,9 +171,9 @@ const AdminDashboard = ({ user, onLogout }) => {
   };
 
 
-  // =========================================================
+  // ==========================================================
   // SAVE NOTE
-  // =========================================================
+  // ==========================================================
 
   const saveNote = async (id) => {
     setSavingNoteId(id);
@@ -176,7 +188,10 @@ const AdminDashboard = ({ user, onLogout }) => {
       .eq("id", id);
 
     if (error) {
-      console.error("Note update error:", error);
+      console.error(
+        "Note update error:",
+        error
+      );
 
       alert(
         error.message ||
@@ -204,11 +219,14 @@ const AdminDashboard = ({ user, onLogout }) => {
   };
 
 
-  // =========================================================
-  // DELETE ENQUIRY
-  // =========================================================
+  // ==========================================================
+  // REQUEST DELETE
+  //
+  // Opens custom confirmation modal.
+  // NO browser confirm popup.
+  // ==========================================================
 
-  const deleteEnquiry = async (id) => {
+  const requestDeleteEnquiry = (id) => {
     const enquiry = enquiries.find(
       (item) => item.id === id
     );
@@ -217,13 +235,33 @@ const AdminDashboard = ({ user, onLogout }) => {
       return;
     }
 
-    const confirmed = window.confirm(
-      `Are you sure you want to delete the enquiry from "${enquiry.name}"?\n\nThis action cannot be undone.`
-    );
+    setDeleteTarget(enquiry);
+  };
 
-    if (!confirmed) {
+
+  // ==========================================================
+  // CANCEL DELETE
+  // ==========================================================
+
+  const cancelDelete = () => {
+    if (deletingId) {
       return;
     }
+
+    setDeleteTarget(null);
+  };
+
+
+  // ==========================================================
+  // CONFIRM DELETE
+  // ==========================================================
+
+  const confirmDelete = async () => {
+    if (!deleteTarget) {
+      return;
+    }
+
+    const id = deleteTarget.id;
 
     setDeletingId(id);
 
@@ -233,37 +271,41 @@ const AdminDashboard = ({ user, onLogout }) => {
       .eq("id", id);
 
     if (error) {
-      console.error("Delete enquiry error:", error);
-
-      alert(
-        error.message ||
-          "Unable to delete enquiry."
+      console.error(
+        "Delete enquiry error:",
+        error
       );
 
       setDeletingId(null);
+
       return;
     }
 
-    // Remove deleted enquiry from local state
+    // Remove deleted enquiry immediately
+    // from local state.
+
     setEnquiries((current) =>
       current.filter(
         (item) => item.id !== id
       )
     );
 
-    // Close note editor if deleting edited enquiry
+    // Close note editor if the deleted
+    // enquiry was being edited.
+
     if (editingNoteId === id) {
       setEditingNoteId(null);
       setNoteValue("");
     }
 
     setDeletingId(null);
+    setDeleteTarget(null);
   };
 
 
-  // =========================================================
+  // ==========================================================
   // LOGOUT
-  // =========================================================
+  // ==========================================================
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -272,9 +314,9 @@ const AdminDashboard = ({ user, onLogout }) => {
   };
 
 
-  // =========================================================
+  // ==========================================================
   // FILTER ENQUIRIES
-  // =========================================================
+  // ==========================================================
 
   const filteredEnquiries = useMemo(() => {
     const searchValue = search
@@ -301,7 +343,10 @@ const AdminDashboard = ({ user, onLogout }) => {
         statusFilter === "All" ||
         enquiry.status === statusFilter;
 
-      return matchesSearch && matchesStatus;
+      return (
+        matchesSearch &&
+        matchesStatus
+      );
     });
   }, [
     enquiries,
@@ -310,9 +355,9 @@ const AdminDashboard = ({ user, onLogout }) => {
   ]);
 
 
-  // =========================================================
+  // ==========================================================
   // STATISTICS
-  // =========================================================
+  // ==========================================================
 
   const total = enquiries.length;
 
@@ -329,9 +374,9 @@ const AdminDashboard = ({ user, onLogout }) => {
   ).length;
 
 
-  // =========================================================
+  // ==========================================================
   // EXPORT DATA
-  // =========================================================
+  // ==========================================================
 
   const getExportData = () => {
     return filteredEnquiries.map(
@@ -347,9 +392,9 @@ const AdminDashboard = ({ user, onLogout }) => {
   };
 
 
-  // =========================================================
+  // ==========================================================
   // EXPORT CSV
-  // =========================================================
+  // ==========================================================
 
   const exportToCSV = () => {
     const rows = getExportData();
@@ -358,6 +403,7 @@ const AdminDashboard = ({ user, onLogout }) => {
       alert(
         "There are no enquiries to export."
       );
+
       return;
     }
 
@@ -366,7 +412,8 @@ const AdminDashboard = ({ user, onLogout }) => {
     const csvRows = rows.map((row) => {
       return headers
         .map((header) => {
-          const value = row[header] ?? "";
+          const value =
+            row[header] ?? "";
 
           return `"${String(value).replace(
             /"/g,
@@ -384,7 +431,8 @@ const AdminDashboard = ({ user, onLogout }) => {
     const blob = new Blob(
       [csvContent],
       {
-        type: "text/csv;charset=utf-8;",
+        type:
+          "text/csv;charset=utf-8;",
       }
     );
 
@@ -413,9 +461,9 @@ const AdminDashboard = ({ user, onLogout }) => {
   };
 
 
-  // =========================================================
+  // ==========================================================
   // EXPORT EXCEL
-  // =========================================================
+  // ==========================================================
 
   const exportToExcel = () => {
     const rows = getExportData();
@@ -424,6 +472,7 @@ const AdminDashboard = ({ user, onLogout }) => {
       alert(
         "There are no enquiries to export."
       );
+
       return;
     }
 
@@ -431,8 +480,8 @@ const AdminDashboard = ({ user, onLogout }) => {
       XLSX.utils.json_to_sheet(rows);
 
     worksheet["!cols"] = [
-      { wch: 38 },
-      { wch: 24 },
+      { wch: 12 },
+      { wch: 30 },
       { wch: 20 },
       { wch: 15 },
       { wch: 16 },
@@ -459,12 +508,13 @@ const AdminDashboard = ({ user, onLogout }) => {
   };
 
 
-  // =========================================================
+  // ==========================================================
   // RETURN
-  // =========================================================
+  // ==========================================================
 
   return (
     <div className="min-h-screen bg-[#f5f3ed]">
+
 
       {/* =====================================================
           HEADER
@@ -477,6 +527,7 @@ const AdminDashboard = ({ user, onLogout }) => {
           bg-white
         "
       >
+
         <div
           className="
             mx-auto
@@ -493,6 +544,7 @@ const AdminDashboard = ({ user, onLogout }) => {
           {/* BRAND */}
 
           <div>
+
             <h1
               className="
                 text-[25px]
@@ -514,12 +566,19 @@ const AdminDashboard = ({ user, onLogout }) => {
             >
               Enquiry Management
             </p>
+
           </div>
 
 
           {/* USER / LOGOUT */}
 
-          <div className="flex items-center gap-[14px]">
+          <div
+            className="
+              flex
+              items-center
+              gap-[14px]
+            "
+          >
 
             <span
               className="
@@ -553,14 +612,17 @@ const AdminDashboard = ({ user, onLogout }) => {
                 hover:bg-[#f7f4ec]
               "
             >
+
               <LogOut size={15} />
 
               Logout
+
             </button>
 
           </div>
 
         </div>
+
       </header>
 
 
@@ -579,7 +641,10 @@ const AdminDashboard = ({ user, onLogout }) => {
         "
       >
 
-        {/* TITLE */}
+
+        {/* ===================================================
+            TITLE
+        =================================================== */}
 
         <div className="mb-[28px]">
 
@@ -608,9 +673,9 @@ const AdminDashboard = ({ user, onLogout }) => {
         </div>
 
 
-        {/* =================================================
+        {/* ===================================================
             STAT CARDS
-        ================================================= */}
+        =================================================== */}
 
         <div
           className="
@@ -633,9 +698,17 @@ const AdminDashboard = ({ user, onLogout }) => {
               p-[20px]
             "
           >
-            <div className="flex items-center justify-between">
+
+            <div
+              className="
+                flex
+                items-center
+                justify-between
+              "
+            >
 
               <div>
+
                 <p
                   className="
                     text-[13px]
@@ -656,6 +729,7 @@ const AdminDashboard = ({ user, onLogout }) => {
                 >
                   {total}
                 </p>
+
               </div>
 
               <div
@@ -674,6 +748,7 @@ const AdminDashboard = ({ user, onLogout }) => {
               </div>
 
             </div>
+
           </div>
 
 
@@ -688,9 +763,17 @@ const AdminDashboard = ({ user, onLogout }) => {
               p-[20px]
             "
           >
-            <div className="flex items-center justify-between">
+
+            <div
+              className="
+                flex
+                items-center
+                justify-between
+              "
+            >
 
               <div>
+
                 <p
                   className="
                     text-[13px]
@@ -711,6 +794,7 @@ const AdminDashboard = ({ user, onLogout }) => {
                 >
                   {newCount}
                 </p>
+
               </div>
 
               <div
@@ -729,6 +813,7 @@ const AdminDashboard = ({ user, onLogout }) => {
               </div>
 
             </div>
+
           </div>
 
 
@@ -743,9 +828,17 @@ const AdminDashboard = ({ user, onLogout }) => {
               p-[20px]
             "
           >
-            <div className="flex items-center justify-between">
+
+            <div
+              className="
+                flex
+                items-center
+                justify-between
+              "
+            >
 
               <div>
+
                 <p
                   className="
                     text-[13px]
@@ -766,6 +859,7 @@ const AdminDashboard = ({ user, onLogout }) => {
                 >
                   {contactedCount}
                 </p>
+
               </div>
 
               <div
@@ -784,6 +878,7 @@ const AdminDashboard = ({ user, onLogout }) => {
               </div>
 
             </div>
+
           </div>
 
 
@@ -798,9 +893,17 @@ const AdminDashboard = ({ user, onLogout }) => {
               p-[20px]
             "
           >
-            <div className="flex items-center justify-between">
+
+            <div
+              className="
+                flex
+                items-center
+                justify-between
+              "
+            >
 
               <div>
+
                 <p
                   className="
                     text-[13px]
@@ -821,6 +924,7 @@ const AdminDashboard = ({ user, onLogout }) => {
                 >
                   {completedCount}
                 </p>
+
               </div>
 
               <div
@@ -839,14 +943,15 @@ const AdminDashboard = ({ user, onLogout }) => {
               </div>
 
             </div>
+
           </div>
 
         </div>
 
 
-        {/* =================================================
+        {/* ===================================================
             FILTER / EXPORT BAR
-        ================================================= */}
+        =================================================== */}
 
         <div
           className="
@@ -905,7 +1010,10 @@ const AdminDashboard = ({ user, onLogout }) => {
                 text-[14px]
                 text-[#182557]
                 outline-none
+                transition
                 focus:border-[#dfa92f]
+                focus:ring-2
+                focus:ring-[#dfa92f]/10
               "
             />
 
@@ -943,6 +1051,7 @@ const AdminDashboard = ({ user, onLogout }) => {
                 focus:border-[#dfa92f]
               "
             >
+
               <option value="All">
                 All statuses
               </option>
@@ -1051,11 +1160,13 @@ const AdminDashboard = ({ user, onLogout }) => {
                       hover:bg-[#f7f4ec]
                     "
                   >
+
                     <Download size={16} />
 
                     <span>
                       Export CSV
                     </span>
+
                   </button>
 
 
@@ -1078,6 +1189,7 @@ const AdminDashboard = ({ user, onLogout }) => {
                       hover:bg-[#f7f4ec]
                     "
                   >
+
                     <FileSpreadsheet
                       size={16}
                       className="text-[#28663d]"
@@ -1086,6 +1198,7 @@ const AdminDashboard = ({ user, onLogout }) => {
                     <span>
                       Export Excel
                     </span>
+
                   </button>
 
                 </div>
@@ -1136,9 +1249,9 @@ const AdminDashboard = ({ user, onLogout }) => {
         </div>
 
 
-        {/* =================================================
+        {/* ===================================================
             TABLE
-        ================================================= */}
+        =================================================== */}
 
         <div
           className="
@@ -1226,8 +1339,6 @@ const AdminDashboard = ({ user, onLogout }) => {
                       Notes
                     </th>
 
-                    {/* NEW ACTION COLUMN */}
-
                     <th className="px-[18px] py-[14px] text-center text-[12px] font-bold uppercase tracking-[0.5px] text-[#777c90]">
                       Actions
                     </th>
@@ -1254,7 +1365,12 @@ const AdminDashboard = ({ user, onLogout }) => {
 
                         {/* NAME */}
 
-                        <td className="px-[18px] py-[17px]">
+                        <td
+                          className="
+                            px-[18px]
+                            py-[17px]
+                          "
+                        >
 
                           <p
                             className="
@@ -1301,7 +1417,12 @@ const AdminDashboard = ({ user, onLogout }) => {
 
                         {/* STATUS */}
 
-                        <td className="px-[18px] py-[17px]">
+                        <td
+                          className="
+                            px-[18px]
+                            py-[17px]
+                          "
+                        >
 
                           <select
                             value={
@@ -1352,7 +1473,12 @@ const AdminDashboard = ({ user, onLogout }) => {
 
                         {/* NOTES */}
 
-                        <td className="px-[18px] py-[17px]">
+                        <td
+                          className="
+                            px-[18px]
+                            py-[17px]
+                          "
+                        >
 
                           {editingNoteId ===
                           enquiry.id ? (
@@ -1460,6 +1586,7 @@ const AdminDashboard = ({ user, onLogout }) => {
                                     text-[#555b72]
                                     transition
                                     hover:bg-[#f7f4ec]
+                                    disabled:opacity-50
                                   "
                                 >
                                   Cancel
@@ -1545,14 +1672,24 @@ const AdminDashboard = ({ user, onLogout }) => {
                             DELETE ACTION
                         ================================================= */}
 
-                        <td className="px-[18px] py-[17px]">
+                        <td
+                          className="
+                            px-[18px]
+                            py-[17px]
+                          "
+                        >
 
-                          <div className="flex justify-center">
+                          <div
+                            className="
+                              flex
+                              justify-center
+                            "
+                          >
 
                             <button
                               type="button"
                               onClick={() =>
-                                deleteEnquiry(
+                                requestDeleteEnquiry(
                                   enquiry.id
                                 )
                               }
@@ -1563,6 +1700,7 @@ const AdminDashboard = ({ user, onLogout }) => {
                               title="Delete enquiry"
                               aria-label={`Delete enquiry from ${enquiry.name}`}
                               className="
+                                group
                                 flex
                                 h-[36px]
                                 w-[36px]
@@ -1575,6 +1713,7 @@ const AdminDashboard = ({ user, onLogout }) => {
                                 text-[#c43d3d]
                                 transition-all
                                 duration-150
+                                hover:-translate-y-[1px]
                                 hover:border-[#e3a7a7]
                                 hover:bg-[#fdeaea]
                                 hover:text-[#a92d2d]
@@ -1595,6 +1734,11 @@ const AdminDashboard = ({ user, onLogout }) => {
 
                                 <Trash2
                                   size={16}
+                                  className="
+                                    transition-transform
+                                    duration-150
+                                    group-hover:scale-105
+                                  "
                                 />
 
                               )}
@@ -1621,9 +1765,9 @@ const AdminDashboard = ({ user, onLogout }) => {
         </div>
 
 
-        {/* =================================================
+        {/* ===================================================
             FOOTER INFORMATION
-        ================================================= */}
+        =================================================== */}
 
         {!loading &&
           filteredEnquiries.length > 0 && (
@@ -1671,6 +1815,363 @@ const AdminDashboard = ({ user, onLogout }) => {
           )}
 
       </main>
+
+
+      {/* =====================================================
+          CUSTOM DELETE CONFIRMATION MODAL
+          
+          This replaces window.confirm().
+          No browser/server popup.
+      ===================================================== */}
+
+      {deleteTarget && (
+
+        <div
+          className="
+            fixed
+            inset-0
+            z-[100]
+            flex
+            items-center
+            justify-center
+            bg-[#182557]/45
+            px-[20px]
+            backdrop-blur-[3px]
+          "
+          onMouseDown={(e) => {
+            if (
+              e.target ===
+              e.currentTarget
+            ) {
+              cancelDelete();
+            }
+          }}
+        >
+
+          {/* MODAL */}
+
+          <div
+            className="
+              w-full
+              max-w-[430px]
+              overflow-hidden
+              rounded-[16px]
+              border
+              border-[#e2ddcf]
+              bg-white
+              shadow-[0_25px_70px_rgba(24,37,87,0.22)]
+              animate-[deleteModalIn_180ms_ease-out]
+            "
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="delete-dialog-title"
+          >
+
+            {/* =================================================
+                MODAL HEADER
+            ================================================= */}
+
+            <div
+              className="
+                flex
+                items-start
+                justify-between
+                border-b
+                border-[#eeeae0]
+                px-[22px]
+                py-[20px]
+              "
+            >
+
+              <div
+                className="
+                  flex
+                  items-center
+                  gap-[12px]
+                "
+              >
+
+                {/* WARNING ICON */}
+
+                <div
+                  className="
+                    flex
+                    h-[42px]
+                    w-[42px]
+                    shrink-0
+                    items-center
+                    justify-center
+                    rounded-[10px]
+                    bg-[#fff0f0]
+                    text-[#c43d3d]
+                  "
+                >
+                  <Trash2 size={19} />
+                </div>
+
+
+                {/* TITLE */}
+
+                <div>
+
+                  <h3
+                    id="delete-dialog-title"
+                    className="
+                      text-[17px]
+                      font-bold
+                      tracking-[-0.2px]
+                      text-[#182557]
+                    "
+                  >
+                    Delete enquiry?
+                  </h3>
+
+                  <p
+                    className="
+                      mt-[2px]
+                      text-[12px]
+                      font-medium
+                      text-[#85899a]
+                    "
+                  >
+                    This action cannot be undone.
+                  </p>
+
+                </div>
+
+              </div>
+
+
+              {/* CLOSE BUTTON */}
+
+              <button
+                type="button"
+                onClick={cancelDelete}
+                disabled={Boolean(deletingId)}
+                aria-label="Close delete confirmation"
+                className="
+                  flex
+                  h-[30px]
+                  w-[30px]
+                  items-center
+                  justify-center
+                  rounded-[6px]
+                  text-[#85899a]
+                  transition
+                  hover:bg-[#f7f4ec]
+                  hover:text-[#182557]
+                  disabled:cursor-not-allowed
+                  disabled:opacity-50
+                "
+              >
+                <X size={17} />
+              </button>
+
+            </div>
+
+
+            {/* =================================================
+                MODAL CONTENT
+            ================================================= */}
+
+            <div
+              className="
+                px-[22px]
+                py-[22px]
+              "
+            >
+
+              <p
+                className="
+                  text-[14px]
+                  leading-[1.55]
+                  text-[#555b72]
+                "
+              >
+                Are you sure you want to delete
+                the enquiry from{" "}
+
+                <span
+                  className="
+                    font-bold
+                    text-[#182557]
+                  "
+                >
+                  "{deleteTarget.name}"
+                </span>
+                ?
+              </p>
+
+
+              {/* WARNING MESSAGE */}
+
+              <div
+                className="
+                  mt-[15px]
+                  flex
+                  items-start
+                  gap-[9px]
+                  rounded-[9px]
+                  border
+                  border-[#f0d4d4]
+                  bg-[#fff8f8]
+                  px-[13px]
+                  py-[11px]
+                "
+              >
+
+                <AlertTriangle
+                  size={15}
+                  className="
+                    mt-[1px]
+                    shrink-0
+                    text-[#c43d3d]
+                  "
+                />
+
+                <p
+                  className="
+                    text-[12px]
+                    font-medium
+                    leading-[1.45]
+                    text-[#9d4a4a]
+                  "
+                >
+                  The enquiry, its status and
+                  notes will be permanently
+                  removed.
+                </p>
+
+              </div>
+
+            </div>
+
+
+            {/* =================================================
+                MODAL ACTIONS
+            ================================================= */}
+
+            <div
+              className="
+                flex
+                items-center
+                justify-end
+                gap-[9px]
+                border-t
+                border-[#eeeae0]
+                bg-[#fcfaf5]
+                px-[22px]
+                py-[15px]
+              "
+            >
+
+              {/* CANCEL */}
+
+              <button
+                type="button"
+                onClick={cancelDelete}
+                disabled={Boolean(deletingId)}
+                className="
+                  h-[38px]
+                  rounded-[7px]
+                  border
+                  border-[#ddd7c9]
+                  bg-white
+                  px-[15px]
+                  text-[13px]
+                  font-bold
+                  text-[#555b72]
+                  transition
+                  hover:bg-[#f7f4ec]
+                  hover:text-[#182557]
+                  disabled:cursor-not-allowed
+                  disabled:opacity-50
+                "
+              >
+                Cancel
+              </button>
+
+
+              {/* DELETE */}
+
+              <button
+                type="button"
+                onClick={confirmDelete}
+                disabled={Boolean(deletingId)}
+                className="
+                  flex
+                  h-[38px]
+                  items-center
+                  gap-[7px]
+                  rounded-[7px]
+                  bg-[#c43d3d]
+                  px-[15px]
+                  text-[13px]
+                  font-bold
+                  text-white
+                  transition-all
+                  duration-150
+                  hover:bg-[#a92d2d]
+                  disabled:cursor-not-allowed
+                  disabled:opacity-60
+                "
+              >
+
+                {deletingId ? (
+
+                  <>
+                    <RefreshCw
+                      size={14}
+                      className="animate-spin"
+                    />
+
+                    Deleting...
+                  </>
+
+                ) : (
+
+                  <>
+                    <Trash2 size={14} />
+
+                    Delete enquiry
+                  </>
+
+                )}
+
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      )}
+
+
+      {/* =====================================================
+          DELETE MODAL ANIMATION
+      ===================================================== */}
+
+      <style>
+        {`
+          @keyframes deleteModalIn {
+            from {
+              opacity: 0;
+              transform:
+                translateY(8px)
+                scale(0.98);
+            }
+
+            to {
+              opacity: 1;
+              transform:
+                translateY(0)
+                scale(1);
+            }
+          }
+        `}
+      </style>
 
     </div>
   );
