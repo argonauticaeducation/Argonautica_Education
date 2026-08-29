@@ -1,0 +1,627 @@
+/* =========================================================
+   SUBJECT TICKER SECTION
+========================================================= */
+
+.subject-ticker-section {
+  position: relative;
+
+  width: 100%;
+
+  min-height: 72px;
+
+  box-sizing: border-box;
+
+  background: #f7f3ea;
+
+  border-top: 1px solid #e7dfd1;
+
+  border-bottom: 1px solid #e7dfd1;
+
+  overflow: hidden;
+
+  padding: 0 15px;
+
+  display: flex;
+
+  align-items: center;
+}
+
+
+/* =========================================================
+   TICKER WINDOW
+========================================================= */
+
+.subject-ticker-window {
+  position: relative;
+
+  width: 100%;
+
+  height: 70px;
+
+  overflow: hidden;
+
+  background: #faf8f1;
+
+  border-left: 1px solid #e7dfd1;
+
+  border-right: 1px solid #e7dfd1;
+
+  display: flex;
+
+  align-items: center;
+}
+
+
+/* =========================================================
+   TICKER TRACK
+========================================================= */
+
+.subject-ticker-track {
+  display: flex;
+
+  align-items: center;
+
+  width: max-content;
+
+  gap: 12px;
+
+  padding-left: 12px;
+
+  padding-right: 12px;
+
+  animation:
+    subjectTickerMove 42s linear infinite;
+
+  will-change: transform;
+}
+
+
+/* =========================================================
+   PAUSE ON HOVER
+========================================================= */
+
+.subject-ticker-window:hover
+.subject-ticker-track {
+  animation-play-state: paused;
+}
+
+
+/* =========================================================
+   TICKER ITEM
+========================================================= */
+
+.subject-ticker-item {
+  flex: 0 0 auto;
+
+  height: 36px;
+
+  display: flex;
+
+  align-items: center;
+
+  white-space: nowrap;
+
+  box-sizing: border-box;
+
+  border: 1px solid #e2d9c9;
+
+  border-radius: 7px;
+
+  background: #ffffff;
+
+  padding: 0 18px;
+
+  font-family: "Inter", sans-serif;
+
+  font-size: 14px;
+
+  line-height: 1;
+
+  color: #202d59;
+
+  box-shadow:
+    0 1px 2px rgba(35, 35, 55, 0.02);
+
+  transition:
+    transform 150ms ease,
+    box-shadow 150ms ease;
+}
+
+
+/* =========================================================
+   ITEM HOVER
+========================================================= */
+
+.subject-ticker-item:hover {
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 3px 8px rgba(35, 35, 55, 0.06);
+}
+
+
+/* =========================================================
+   PURPLE ACCENT
+========================================================= */
+
+.subject-ticker-purple {
+  border-left: 4px solid #5b55aa;
+}
+
+
+/* =========================================================
+   GOLD ACCENT
+========================================================= */
+
+.subject-ticker-gold {
+  border-left: 4px solid #d39b20;
+}
+
+
+/* =========================================================
+   SUBJECT NAME
+========================================================= */
+
+.subject-name {
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   SEPARATOR
+========================================================= */
+
+.subject-separator {
+  margin-left: 5px;
+
+  margin-right: 5px;
+
+  font-weight: 700;
+
+  color: #29345c;
+}
+
+
+/* =========================================================
+   SUBJECT CODE
+========================================================= */
+
+.subject-code {
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   FADE
+========================================================= */
+
+.subject-ticker-fade {
+  position: absolute;
+
+  top: 0;
+
+  width: 55px;
+
+  height: 100%;
+
+  z-index: 10;
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   LEFT FADE
+========================================================= */
+
+.subject-ticker-fade-left {
+  left: 0;
+
+  background:
+    linear-gradient(
+      to right,
+      #faf8f1 0%,
+      rgba(250, 248, 241, 0.92) 35%,
+      rgba(250, 248, 241, 0) 100%
+    );
+}
+
+
+/* =========================================================
+   RIGHT FADE
+========================================================= */
+
+.subject-ticker-fade-right {
+  right: 0;
+
+  background:
+    linear-gradient(
+      to left,
+      #faf8f1 0%,
+      rgba(250, 248, 241, 0.92) 35%,
+      rgba(250, 248, 241, 0) 100%
+    );
+}
+
+
+/* =========================================================
+   ANIMATION
+========================================================= */
+
+@keyframes subjectTickerMove {
+
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+
+}
+
+
+/* =========================================================
+   LARGE TABLET
+   901px - 1100px
+========================================================= */
+
+@media (max-width: 1100px) {
+
+  .subject-ticker-section {
+    min-height: 70px;
+
+    padding-left: 13px;
+
+    padding-right: 13px;
+  }
+
+
+  .subject-ticker-window {
+    height: 68px;
+  }
+
+
+  .subject-ticker-track {
+    gap: 11px;
+
+    padding-left: 11px;
+
+    padding-right: 11px;
+
+    animation-duration: 40s;
+  }
+
+
+  .subject-ticker-item {
+    height: 35px;
+
+    padding-left: 16px;
+
+    padding-right: 16px;
+
+    font-size: 13.5px;
+  }
+
+
+  .subject-ticker-fade {
+    width: 50px;
+  }
+
+}
+
+
+/* =========================================================
+   TABLET
+   769px - 900px
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .subject-ticker-section {
+    min-height: 68px;
+
+    padding-left: 12px;
+
+    padding-right: 12px;
+  }
+
+
+  .subject-ticker-window {
+    height: 66px;
+  }
+
+
+  .subject-ticker-track {
+    gap: 10px;
+
+    animation-duration: 37s;
+  }
+
+
+  .subject-ticker-item {
+    height: 34px;
+
+    padding-left: 15px;
+
+    padding-right: 15px;
+
+    font-size: 13px;
+  }
+
+
+  .subject-ticker-purple {
+    border-left-width: 3px;
+  }
+
+
+  .subject-ticker-gold {
+    border-left-width: 3px;
+  }
+
+
+  .subject-separator {
+    margin-left: 4px;
+
+    margin-right: 4px;
+  }
+
+
+  .subject-ticker-fade {
+    width: 48px;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL TABLET
+   601px - 768px
+========================================================= */
+
+@media (max-width: 768px) {
+
+  .subject-ticker-section {
+    min-height: 66px;
+
+    padding-left: 10px;
+
+    padding-right: 10px;
+  }
+
+
+  .subject-ticker-window {
+    height: 64px;
+  }
+
+
+  .subject-ticker-track {
+    gap: 10px;
+
+    padding-left: 10px;
+
+    padding-right: 10px;
+
+    animation-duration: 35s;
+  }
+
+
+  .subject-ticker-item {
+    height: 34px;
+
+    padding-left: 15px;
+
+    padding-right: 15px;
+
+    font-size: 13px;
+  }
+
+
+  .subject-ticker-fade {
+    width: 44px;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   481px - 600px
+========================================================= */
+
+@media (max-width: 600px) {
+
+  .subject-ticker-section {
+    min-height: 63px;
+
+    padding-left: 8px;
+
+    padding-right: 8px;
+  }
+
+
+  .subject-ticker-window {
+    height: 61px;
+  }
+
+
+  .subject-ticker-track {
+    gap: 9px;
+
+    padding-left: 9px;
+
+    padding-right: 9px;
+
+    animation-duration: 32s;
+  }
+
+
+  .subject-ticker-item {
+    height: 32px;
+
+    padding-left: 13px;
+
+    padding-right: 13px;
+
+    border-radius: 6px;
+
+    font-size: 12px;
+  }
+
+
+  .subject-ticker-purple {
+    border-left-width: 3px;
+  }
+
+
+  .subject-ticker-gold {
+    border-left-width: 3px;
+  }
+
+
+  .subject-separator {
+    margin-left: 4px;
+
+    margin-right: 4px;
+  }
+
+
+  .subject-ticker-fade {
+    width: 38px;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   421px - 480px
+========================================================= */
+
+@media (max-width: 480px) {
+
+  .subject-ticker-section {
+    min-height: 61px;
+
+    padding-left: 7px;
+
+    padding-right: 7px;
+  }
+
+
+  .subject-ticker-window {
+    height: 59px;
+  }
+
+
+  .subject-ticker-track {
+    gap: 8px;
+
+    padding-left: 8px;
+
+    padding-right: 8px;
+
+    animation-duration: 30s;
+  }
+
+
+  .subject-ticker-item {
+    height: 31px;
+
+    padding-left: 12px;
+
+    padding-right: 12px;
+
+    font-size: 11.5px;
+  }
+
+
+  .subject-ticker-fade {
+    width: 34px;
+  }
+
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media (max-width: 350px) {
+
+  .subject-ticker-section {
+    min-height: 59px;
+
+    padding-left: 6px;
+
+    padding-right: 6px;
+  }
+
+
+  .subject-ticker-window {
+    height: 57px;
+  }
+
+
+  .subject-ticker-track {
+    gap: 7px;
+
+    animation-duration: 28s;
+  }
+
+
+  .subject-ticker-item {
+    height: 30px;
+
+    padding-left: 10px;
+
+    padding-right: 10px;
+
+    font-size: 11px;
+  }
+
+
+  .subject-separator {
+    margin-left: 3px;
+
+    margin-right: 3px;
+  }
+
+
+  .subject-ticker-fade {
+    width: 30px;
+  }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .subject-ticker-track {
+    animation: none;
+
+    transform: none;
+  }
+
+
+  .subject-ticker-window {
+    overflow-x: auto;
+
+    scrollbar-width: none;
+  }
+
+
+  .subject-ticker-window::-webkit-scrollbar {
+    display: none;
+  }
+
+
+  .subject-ticker-item:hover {
+    transform: none;
+  }
+
+}

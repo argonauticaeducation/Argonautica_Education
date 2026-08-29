@@ -1,0 +1,823 @@
+/* =========================================================
+   OUR STORY SECTION
+========================================================= */
+
+.our-story-section {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  background: #1c2758;
+
+  padding-top: 63px;
+  padding-bottom: 86px;
+
+  overflow: hidden;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.our-story-header {
+  width: 100%;
+
+  max-width: 1000px;
+
+  margin: 0 auto;
+
+  text-align: center;
+}
+
+
+/* =========================================================
+   EYEBROW
+========================================================= */
+
+.our-story-eyebrow {
+  margin: 0;
+
+  font-family: "DM Serif Display", serif;
+
+  font-size: 23px;
+
+  font-weight: 400;
+
+  line-height: 1.2;
+
+  color: #ffffff;
+}
+
+
+/* =========================================================
+   MAIN TITLE
+========================================================= */
+
+.our-story-title {
+  margin: 9px 0 0;
+
+  font-family: "DM Serif Display", serif;
+
+  font-size: 36px;
+
+  font-weight: 400;
+
+  line-height: 1.25;
+
+  letter-spacing: -0.35px;
+
+  color: #ffffff;
+}
+
+
+/* =========================================================
+   HANDWRITTEN SUBTITLE
+========================================================= */
+
+.our-story-subtitle {
+  margin: 16px 0 0;
+
+  font-family: "Caveat", cursive;
+
+  font-size: 16px;
+
+  font-weight: 600;
+
+  line-height: 1.2;
+
+  color: #e4b13b;
+}
+
+
+/* =========================================================
+   STORY CARDS
+========================================================= */
+
+.our-story-cards {
+  width: 100%;
+
+  max-width: 1004px;
+
+  margin: 51px auto 0;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 16px;
+
+  align-items: start;
+}
+
+
+/* =========================================================
+   STORY CARD
+========================================================= */
+
+.our-story-card {
+  width: 100%;
+
+  min-width: 0;
+
+  box-sizing: border-box;
+
+  background: #263260;
+
+  border: 1px solid rgba(255, 255, 255, 0.20);
+
+  border-radius: 14px;
+
+  overflow: hidden;
+
+  transition:
+    border-color 180ms ease,
+    background 180ms ease,
+    transform 180ms ease,
+    box-shadow 180ms ease;
+}
+
+
+/* =========================================================
+   OPEN CARD
+========================================================= */
+
+.our-story-card-open {
+  background: #293463;
+
+  border-color: rgba(255, 255, 255, 0.23);
+}
+
+
+/* =========================================================
+   QUESTION BUTTON
+========================================================= */
+
+.our-story-question {
+  width: 100%;
+
+  min-height: 88px;
+
+  box-sizing: border-box;
+
+  padding: 0 23px;
+
+  border: none;
+
+  background: transparent;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 20px;
+
+  cursor: pointer;
+
+  text-align: left;
+}
+
+
+/* =========================================================
+   QUESTION TEXT
+========================================================= */
+
+.our-story-question-text {
+  min-width: 0;
+
+  font-family: "Inter", sans-serif;
+
+  font-size: 15px;
+
+  font-weight: 700;
+
+  line-height: 1.35;
+
+  color: #ffffff;
+}
+
+
+/* =========================================================
+   TOGGLE
+========================================================= */
+
+.our-story-toggle {
+  flex: 0 0 auto;
+
+  width: 18px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-family: "Inter", sans-serif;
+
+  font-size: 21px;
+
+  font-weight: 400;
+
+  line-height: 1;
+
+  color: #e5b33c;
+}
+
+
+/* =========================================================
+   ANSWER WRAPPER
+========================================================= */
+
+.our-story-answer-wrapper {
+  display: grid;
+
+  grid-template-rows: 0fr;
+
+  opacity: 0;
+
+  transition:
+    grid-template-rows 300ms ease,
+    opacity 220ms ease;
+}
+
+
+/* =========================================================
+   OPEN ANSWER
+========================================================= */
+
+.our-story-card-open
+.our-story-answer-wrapper {
+  grid-template-rows: 1fr;
+
+  opacity: 1;
+}
+
+
+/* =========================================================
+   ANSWER
+========================================================= */
+
+.our-story-answer {
+  min-height: 0;
+
+  overflow: hidden;
+
+  padding: 0 23px;
+
+  font-family: "Inter", sans-serif;
+
+  font-size: 14px;
+
+  font-weight: 400;
+
+  line-height: 1.58;
+
+  color: #ffffff;
+}
+
+
+/* =========================================================
+   ANSWER PARAGRAPHS
+========================================================= */
+
+.our-story-answer p {
+  margin: 0 0 15px;
+}
+
+
+.our-story-answer p:last-child {
+  margin-bottom: 25px;
+}
+
+
+/* =========================================================
+   FOUNDER
+========================================================= */
+
+.our-story-answer .our-story-founder {
+  margin-top: 2px;
+
+  margin-bottom: 25px;
+
+  font-weight: 800;
+
+  color: #e5b33c;
+}
+
+
+/* =========================================================
+   QUESTION HOVER
+========================================================= */
+
+.our-story-question:hover
+.our-story-question-text {
+  color: #f8f8f8;
+}
+
+
+.our-story-question:hover
+.our-story-toggle {
+  color: #f0c454;
+}
+
+
+/* =========================================================
+   CARD HOVER
+========================================================= */
+
+.our-story-card:hover {
+  border-color: rgba(255, 255, 255, 0.27);
+}
+
+
+/* =========================================================
+   FOCUS
+========================================================= */
+
+.our-story-question:focus-visible {
+  outline: 2px solid #e5b33c;
+
+  outline-offset: -3px;
+}
+
+
+/* =========================================================
+   LARGE TABLET
+   901px - 1100px
+========================================================= */
+
+@media (max-width: 1100px) {
+
+  .our-story-section {
+    padding-left: 32px;
+
+    padding-right: 32px;
+  }
+
+
+  .our-story-cards {
+    max-width: 1000px;
+
+    gap: 14px;
+  }
+
+
+  .our-story-question {
+    padding-left: 19px;
+
+    padding-right: 19px;
+  }
+
+
+  .our-story-question-text {
+    font-size: 14px;
+  }
+
+
+  .our-story-answer {
+    padding-left: 19px;
+
+    padding-right: 19px;
+
+    font-size: 13px;
+  }
+
+}
+
+
+/* =========================================================
+   TABLET
+   761px - 900px
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .our-story-section {
+    padding-top: 58px;
+
+    padding-bottom: 70px;
+
+    padding-left: 24px;
+
+    padding-right: 24px;
+  }
+
+
+  .our-story-header {
+    max-width: 760px;
+  }
+
+
+  .our-story-eyebrow {
+    font-size: 22px;
+  }
+
+
+  .our-story-title {
+    font-size: 33px;
+  }
+
+
+  .our-story-subtitle {
+    margin-top: 14px;
+
+    font-size: 15px;
+  }
+
+
+  .our-story-cards {
+    width: 100%;
+
+    max-width: 820px;
+
+    margin-top: 43px;
+
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+
+    gap: 12px;
+  }
+
+
+  .our-story-card {
+    border-radius: 13px;
+  }
+
+
+  .our-story-question {
+    min-height: 82px;
+
+    padding-left: 16px;
+
+    padding-right: 16px;
+
+    gap: 12px;
+  }
+
+
+  .our-story-question-text {
+    font-size: 13px;
+
+    line-height: 1.35;
+  }
+
+
+  .our-story-toggle {
+    width: 17px;
+
+    font-size: 19px;
+  }
+
+
+  .our-story-answer {
+    padding-left: 16px;
+
+    padding-right: 16px;
+
+    font-size: 12px;
+
+    line-height: 1.55;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL TABLET
+   601px - 760px
+========================================================= */
+
+@media (max-width: 760px) {
+
+  .our-story-section {
+    padding-top: 55px;
+
+    padding-bottom: 65px;
+
+    padding-left: 22px;
+
+    padding-right: 22px;
+  }
+
+
+  .our-story-eyebrow {
+    font-size: 22px;
+  }
+
+
+  .our-story-title {
+    font-size: 31px;
+
+    line-height: 1.2;
+  }
+
+
+  .our-story-subtitle {
+    font-size: 15px;
+  }
+
+
+  /*
+    Two columns on smaller tablets.
+    This prevents the cards from becoming
+    too narrow.
+  */
+
+  .our-story-cards {
+    max-width: 620px;
+
+    margin-top: 38px;
+
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 14px;
+  }
+
+
+  .our-story-question {
+    min-height: 78px;
+
+    padding-left: 18px;
+
+    padding-right: 18px;
+  }
+
+
+  .our-story-question-text {
+    font-size: 13px;
+  }
+
+
+  .our-story-answer {
+    padding-left: 18px;
+
+    padding-right: 18px;
+
+    font-size: 12.5px;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   481px - 600px
+========================================================= */
+
+@media (max-width: 600px) {
+
+  .our-story-section {
+    padding-top: 52px;
+
+    padding-bottom: 60px;
+
+    padding-left: 18px;
+
+    padding-right: 18px;
+  }
+
+
+  .our-story-eyebrow {
+    font-size: 21px;
+  }
+
+
+  .our-story-title {
+    margin-top: 8px;
+
+    font-size: 29px;
+
+    line-height: 1.2;
+
+    padding: 0 8px;
+  }
+
+
+  .our-story-title-break {
+    display: none;
+  }
+
+
+  .our-story-subtitle {
+    margin-top: 14px;
+
+    font-size: 15px;
+  }
+
+
+  .our-story-cards {
+    width: 100%;
+
+    max-width: 390px;
+
+    margin-top: 34px;
+
+    grid-template-columns: 1fr;
+
+    gap: 13px;
+  }
+
+
+  .our-story-card {
+    border-radius: 13px;
+  }
+
+
+  .our-story-question {
+    min-height: 70px;
+
+    padding-left: 18px;
+
+    padding-right: 18px;
+
+    gap: 15px;
+  }
+
+
+  .our-story-question-text {
+    font-size: 13px;
+
+    line-height: 1.4;
+  }
+
+
+  .our-story-toggle {
+    width: 17px;
+
+    font-size: 19px;
+  }
+
+
+  .our-story-answer {
+    padding-left: 18px;
+
+    padding-right: 18px;
+
+    font-size: 13px;
+
+    line-height: 1.55;
+  }
+
+
+  .our-story-answer p {
+    margin-bottom: 14px;
+  }
+
+
+  .our-story-answer p:last-child {
+    margin-bottom: 22px;
+  }
+
+
+  .our-story-answer .our-story-founder {
+    margin-bottom: 22px;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 420px) {
+
+  .our-story-section {
+    padding-top: 48px;
+
+    padding-bottom: 55px;
+
+    padding-left: 16px;
+
+    padding-right: 16px;
+  }
+
+
+  .our-story-eyebrow {
+    font-size: 20px;
+  }
+
+
+  .our-story-title {
+    font-size: 26px;
+
+    padding-left: 4px;
+
+    padding-right: 4px;
+  }
+
+
+  .our-story-subtitle {
+    font-size: 14px;
+  }
+
+
+  .our-story-cards {
+    max-width: 360px;
+
+    margin-top: 30px;
+
+    gap: 11px;
+  }
+
+
+  .our-story-question {
+    min-height: 67px;
+
+    padding-left: 16px;
+
+    padding-right: 16px;
+
+    gap: 10px;
+  }
+
+
+  .our-story-question-text {
+    font-size: 12px;
+  }
+
+
+  .our-story-toggle {
+    width: 16px;
+
+    font-size: 18px;
+  }
+
+
+  .our-story-answer {
+    padding-left: 16px;
+
+    padding-right: 16px;
+
+    font-size: 12px;
+
+    line-height: 1.55;
+  }
+
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media (max-width: 350px) {
+
+  .our-story-section {
+    padding-left: 13px;
+
+    padding-right: 13px;
+  }
+
+
+  .our-story-title {
+    font-size: 25px;
+  }
+
+
+  .our-story-subtitle {
+    font-size: 13px;
+  }
+
+
+  .our-story-question {
+    min-height: 64px;
+
+    padding-left: 14px;
+
+    padding-right: 14px;
+  }
+
+
+  .our-story-question-text {
+    font-size: 11.5px;
+  }
+
+
+  .our-story-answer {
+    padding-left: 14px;
+
+    padding-right: 14px;
+
+    font-size: 11.5px;
+  }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .our-story-card,
+  .our-story-answer-wrapper {
+    transition: none;
+  }
+
+}

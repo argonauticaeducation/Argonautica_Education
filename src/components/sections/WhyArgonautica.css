@@ -1,0 +1,747 @@
+/* =========================================================
+   WHY ARGONAUTICA SECTION
+========================================================= */
+
+.why-argonautica-section {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  background: #f7f3e9;
+
+  padding-top: 57px;
+  padding-bottom: 72px;
+
+  overflow: hidden;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.why-argonautica-header {
+  width: 100%;
+
+  max-width: 1000px;
+
+  margin: 0 auto;
+
+  text-align: center;
+}
+
+
+/* =========================================================
+   EYEBROW
+========================================================= */
+
+.why-argonautica-eyebrow {
+  margin: 0;
+
+  font-family: "DM Serif Display", serif;
+
+  font-size: 23px;
+
+  font-weight: 400;
+
+  line-height: 1.2;
+
+  color: #5752b4;
+}
+
+
+/* =========================================================
+   MAIN TITLE
+========================================================= */
+
+.why-argonautica-title {
+  margin: 7px 0 0;
+
+  font-family: "DM Serif Display", serif;
+
+  font-size: 34px;
+
+  font-weight: 400;
+
+  line-height: 1.15;
+
+  letter-spacing: -0.4px;
+
+  color: #182557;
+}
+
+
+/* =========================================================
+   HANDWRITTEN SUBTITLE
+========================================================= */
+
+.why-argonautica-subtitle {
+  margin: 16px 0 0;
+
+  font-family: "Caveat", cursive;
+
+  font-size: 15px;
+
+  font-weight: 500;
+
+  line-height: 1.2;
+
+  color: #5752b4;
+
+  text-decoration-line: underline;
+
+  text-decoration-thickness: 1px;
+
+  text-underline-offset: 4px;
+}
+
+
+/* =========================================================
+   CARDS WRAPPER
+========================================================= */
+
+.why-argonautica-cards {
+  width: 100%;
+
+  max-width: 860px;
+
+  margin: 17px auto 0;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 14px;
+
+  align-items: stretch;
+}
+
+
+/* =========================================================
+   CARD
+========================================================= */
+
+.why-argonautica-card {
+  width: 100%;
+
+  min-width: 0;
+
+  min-height: 222px;
+
+  box-sizing: border-box;
+
+  padding: 21px 17px 20px;
+
+  background: #fffefa;
+
+  border: 1px solid #e4dac7;
+
+  border-radius: 13px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease;
+}
+
+
+/* =========================================================
+   CARD HOVER
+========================================================= */
+
+.why-argonautica-card:hover {
+  transform: translateY(-2px);
+
+  border-color: #d9cbb4;
+
+  box-shadow:
+    0 9px 20px rgba(24, 37, 87, 0.05);
+}
+
+
+/* =========================================================
+   ICON
+========================================================= */
+
+.why-argonautica-icon {
+  width: 36px;
+
+  height: 36px;
+
+  flex: 0 0 36px;
+
+  border-radius: 8px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  color: white;
+}
+
+
+/* =========================================================
+   ICON COLORS
+========================================================= */
+
+.why-icon-purple {
+  background: #5c55b0;
+}
+
+
+.why-icon-green {
+  background: #81905f;
+}
+
+
+.why-icon-orange {
+  background: #bd5c3f;
+}
+
+
+.why-icon-gold {
+  background: #d49a20;
+}
+
+
+/* =========================================================
+   CARD TITLE
+========================================================= */
+
+.why-argonautica-card-title {
+  margin: 12px 0 0;
+
+  font-family: "DM Serif Display", serif;
+
+  font-size: 16px;
+
+  font-weight: 400;
+
+  line-height: 1.18;
+
+  color: #182557;
+}
+
+
+/* =========================================================
+   CARD DESCRIPTION
+========================================================= */
+
+.why-argonautica-card-description {
+  margin: 8px 0 0;
+
+  font-family: "Inter", sans-serif;
+
+  font-size: 11.5px;
+
+  font-weight: 400;
+
+  line-height: 1.48;
+
+  color: #596080;
+}
+
+
+/* =========================================================
+   LARGE TABLET
+   901px - 1100px
+========================================================= */
+
+@media (max-width: 1100px) {
+
+  .why-argonautica-section {
+    padding-left: 32px;
+
+    padding-right: 32px;
+  }
+
+
+  .why-argonautica-cards {
+    max-width: 900px;
+
+    gap: 13px;
+  }
+
+
+  .why-argonautica-card {
+    padding-left: 16px;
+
+    padding-right: 16px;
+  }
+
+
+  .why-argonautica-card-title {
+    font-size: 15.5px;
+  }
+
+
+  .why-argonautica-card-description {
+    font-size: 11px;
+  }
+
+}
+
+
+/* =========================================================
+   TABLET
+   761px - 900px
+
+   Keep 4 columns, but reduce sizing so the
+   desktop-style layout still fits comfortably.
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .why-argonautica-section {
+    padding-top: 55px;
+
+    padding-bottom: 65px;
+
+    padding-left: 24px;
+
+    padding-right: 24px;
+  }
+
+
+  .why-argonautica-header {
+    max-width: 760px;
+  }
+
+
+  .why-argonautica-eyebrow {
+    font-size: 22px;
+  }
+
+
+  .why-argonautica-title {
+    font-size: 32px;
+  }
+
+
+  .why-argonautica-subtitle {
+    font-size: 15px;
+  }
+
+
+  .why-argonautica-cards {
+    width: 100%;
+
+    max-width: 820px;
+
+    margin-top: 20px;
+
+    grid-template-columns:
+      repeat(4, minmax(0, 1fr));
+
+    gap: 10px;
+  }
+
+
+  .why-argonautica-card {
+    min-height: 210px;
+
+    padding: 19px 13px 18px;
+
+    border-radius: 12px;
+  }
+
+
+  .why-argonautica-icon {
+    width: 34px;
+
+    height: 34px;
+
+    flex-basis: 34px;
+  }
+
+
+  .why-argonautica-card-title {
+    margin-top: 11px;
+
+    font-size: 14px;
+
+    line-height: 1.2;
+  }
+
+
+  .why-argonautica-card-description {
+    margin-top: 7px;
+
+    font-size: 10px;
+
+    line-height: 1.48;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL TABLET
+   601px - 760px
+
+   Switch to 2 columns so the cards do not become
+   too narrow.
+========================================================= */
+
+@media (max-width: 760px) {
+
+  .why-argonautica-section {
+    padding-top: 53px;
+
+    padding-bottom: 62px;
+
+    padding-left: 22px;
+
+    padding-right: 22px;
+  }
+
+
+  .why-argonautica-eyebrow {
+    font-size: 22px;
+  }
+
+
+  .why-argonautica-title {
+    font-size: 31px;
+
+    line-height: 1.18;
+  }
+
+
+  .why-argonautica-subtitle {
+    margin-top: 14px;
+
+    font-size: 15px;
+  }
+
+
+  .why-argonautica-cards {
+    max-width: 620px;
+
+    margin-top: 25px;
+
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 14px;
+  }
+
+
+  .why-argonautica-card {
+    min-height: 205px;
+
+    padding: 20px 17px 19px;
+
+    border-radius: 13px;
+  }
+
+
+  .why-argonautica-icon {
+    width: 35px;
+
+    height: 35px;
+
+    flex-basis: 35px;
+  }
+
+
+  .why-argonautica-card-title {
+    margin-top: 12px;
+
+    font-size: 16px;
+  }
+
+
+  .why-argonautica-card-description {
+    margin-top: 8px;
+
+    font-size: 11px;
+
+    line-height: 1.5;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   481px - 600px
+========================================================= */
+
+@media (max-width: 600px) {
+
+  .why-argonautica-section {
+    padding-top: 50px;
+
+    padding-bottom: 55px;
+
+    padding-left: 18px;
+
+    padding-right: 18px;
+  }
+
+
+  .why-argonautica-eyebrow {
+    font-size: 21px;
+  }
+
+
+  .why-argonautica-title {
+    margin-top: 7px;
+
+    font-size: 29px;
+
+    line-height: 1.2;
+
+    padding: 0 7px;
+  }
+
+
+  .why-argonautica-subtitle {
+    margin-top: 14px;
+
+    font-size: 14px;
+
+    line-height: 1.25;
+
+    padding: 0 5px;
+  }
+
+
+  .why-argonautica-cards {
+    width: 100%;
+
+    max-width: 390px;
+
+    margin-top: 24px;
+
+    grid-template-columns: 1fr;
+
+    gap: 12px;
+  }
+
+
+  .why-argonautica-card {
+    min-height: auto;
+
+    padding: 20px 18px 22px;
+
+    border-radius: 13px;
+  }
+
+
+  .why-argonautica-icon {
+    width: 36px;
+
+    height: 36px;
+
+    flex-basis: 36px;
+  }
+
+
+  .why-argonautica-card-title {
+    margin-top: 12px;
+
+    font-size: 17px;
+
+    line-height: 1.2;
+  }
+
+
+  .why-argonautica-card-description {
+    margin-top: 8px;
+
+    font-size: 12px;
+
+    line-height: 1.52;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   421px - 480px
+========================================================= */
+
+@media (max-width: 480px) {
+
+  .why-argonautica-section {
+    padding-left: 17px;
+
+    padding-right: 17px;
+  }
+
+
+  .why-argonautica-title {
+    font-size: 27px;
+
+    padding-left: 3px;
+
+    padding-right: 3px;
+  }
+
+
+  .why-argonautica-subtitle {
+    font-size: 13.5px;
+  }
+
+
+  .why-argonautica-cards {
+    max-width: 380px;
+
+    gap: 11px;
+  }
+
+
+  .why-argonautica-card {
+    padding: 19px 17px 21px;
+  }
+
+
+  .why-argonautica-card-title {
+    font-size: 16px;
+  }
+
+
+  .why-argonautica-card-description {
+    font-size: 11.5px;
+  }
+
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media (max-width: 420px) {
+
+  .why-argonautica-section {
+    padding-left: 15px;
+
+    padding-right: 15px;
+
+    padding-bottom: 50px;
+  }
+
+
+  .why-argonautica-eyebrow {
+    font-size: 20px;
+  }
+
+
+  .why-argonautica-title {
+    font-size: 26px;
+  }
+
+
+  .why-argonautica-subtitle {
+    font-size: 13px;
+  }
+
+
+  .why-argonautica-cards {
+    max-width: 360px;
+
+    margin-top: 22px;
+
+    gap: 10px;
+  }
+
+
+  .why-argonautica-card {
+    padding: 18px 16px 20px;
+
+    border-radius: 12px;
+  }
+
+
+  .why-argonautica-icon {
+    width: 34px;
+
+    height: 34px;
+
+    flex-basis: 34px;
+  }
+
+
+  .why-argonautica-card-title {
+    font-size: 15.5px;
+  }
+
+
+  .why-argonautica-card-description {
+    font-size: 11px;
+
+    line-height: 1.5;
+  }
+
+}
+
+
+/* =========================================================
+   EXTRA SMALL MOBILE
+========================================================= */
+
+@media (max-width: 350px) {
+
+  .why-argonautica-section {
+    padding-left: 13px;
+
+    padding-right: 13px;
+  }
+
+
+  .why-argonautica-title {
+    font-size: 24px;
+  }
+
+
+  .why-argonautica-subtitle {
+    font-size: 12px;
+  }
+
+
+  .why-argonautica-card {
+    padding-left: 14px;
+
+    padding-right: 14px;
+  }
+
+
+  .why-argonautica-card-title {
+    font-size: 15px;
+  }
+
+
+  .why-argonautica-card-description {
+    font-size: 10.5px;
+  }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .why-argonautica-card {
+    transition: none;
+  }
+
+
+  .why-argonautica-card:hover {
+    transform: none;
+  }
+
+}

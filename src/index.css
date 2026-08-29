@@ -1,0 +1,46 @@
+@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=DM+Serif+Display&family=Inter:wght@400;500;600;700;800&display=swap");
+
+@import "tailwindcss";
+
+/* =========================================================
+   GLOBAL RESET
+========================================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+
+  background: #f7f3e9;
+
+  font-family: "Inter", sans-serif;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+
+/* =========================================================
+   FONT UTILITIES
+========================================================= */
+
+.font-display {
+  font-family: "DM Serif Display", serif;
+}
+
+.font-handwritten {
+  font-family: "Caveat", cursive;
+}
+
+.font-body {
+  font-family: "Inter", sans-serif;
+}

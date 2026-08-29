@@ -1,0 +1,885 @@
+/* =========================================================
+   HOW TUTORING WORKS
+========================================================= */
+
+.how-tutoring-section {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  background: #f7f3e9;
+
+  padding-top: 62px;
+  padding-bottom: 70px;
+
+  overflow: hidden;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.how-tutoring-header {
+  width: 100%;
+
+  max-width: 1000px;
+
+  margin: 0 auto;
+
+  text-align: center;
+}
+
+
+/* =========================================================
+   EYEBROW
+========================================================= */
+
+.how-tutoring-eyebrow {
+  margin: 0;
+
+  font-family: "DM Serif Display", serif;
+
+  font-size: 23px;
+  font-weight: 400;
+
+  line-height: 1.2;
+
+  color: #5752b4;
+}
+
+
+/* =========================================================
+   MAIN TITLE
+========================================================= */
+
+.how-tutoring-title {
+  margin: 8px 0 0;
+
+  font-family: "DM Serif Display", serif;
+
+  font-size: 34px;
+  font-weight: 400;
+
+  line-height: 1.15;
+
+  letter-spacing: -0.4px;
+
+  color: #182557;
+}
+
+
+/* =========================================================
+   SUBTITLE
+========================================================= */
+
+.how-tutoring-subtitle {
+  margin: 16px 0 0;
+
+  font-family: "Caveat", cursive;
+
+  font-size: 16px;
+  font-weight: 500;
+
+  line-height: 1.2;
+
+  color: #5752b4;
+
+  text-decoration-line: underline;
+
+  text-decoration-thickness: 1px;
+
+  text-underline-offset: 4px;
+}
+
+
+/* =========================================================
+   CARDS WRAPPER
+========================================================= */
+
+.how-tutoring-cards {
+  width: 100%;
+
+  max-width: 858px;
+
+  margin: 18px auto 0;
+
+  display: grid;
+
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  gap: 16px;
+
+  align-items: stretch;
+}
+
+
+/* =========================================================
+   CARD
+========================================================= */
+
+.tutoring-option-card {
+  width: 100%;
+
+  min-width: 0;
+
+  min-height: 326px;
+
+  box-sizing: border-box;
+
+  padding: 24px 23px 24px;
+
+  background: #fffefa;
+
+  border: 1px solid #e4dac7;
+
+  border-radius: 14px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  overflow: hidden;
+
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease;
+}
+
+
+/* =========================================================
+   CARD HOVER
+========================================================= */
+
+.tutoring-option-card:hover {
+  transform: translateY(-2px);
+
+  border-color: #d8c9ae;
+
+  box-shadow:
+    0 10px 24px rgba(28, 37, 87, 0.05);
+}
+
+
+/* =========================================================
+   BADGE
+========================================================= */
+
+.tutoring-option-badge {
+  width: 42px;
+
+  height: 42px;
+
+  flex: 0 0 42px;
+
+  border-radius: 9px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-family: "Inter", sans-serif;
+
+  font-size: 12px;
+
+  font-weight: 800;
+
+  line-height: 1;
+
+  color: white;
+}
+
+
+/* =========================================================
+   BADGE COLORS
+========================================================= */
+
+.tutoring-badge-purple {
+  background: #5b54ae;
+}
+
+
+.tutoring-badge-green {
+  background: #81905f;
+}
+
+
+.tutoring-badge-orange {
+  background: #bd5c3f;
+}
+
+
+/* =========================================================
+   CARD TITLE
+========================================================= */
+
+.tutoring-option-title {
+  margin: 14px 0 0;
+
+  font-family: "DM Serif Display", serif;
+
+  font-size: 17px;
+
+  font-weight: 400;
+
+  line-height: 1.2;
+
+  color: #182557;
+}
+
+
+/* =========================================================
+   DESCRIPTION
+========================================================= */
+
+.tutoring-option-description {
+  margin: 9px 0 0;
+
+  font-family: "Inter", sans-serif;
+
+  font-size: 11.5px;
+
+  font-weight: 400;
+
+  line-height: 1.55;
+
+  color: #596080;
+}
+
+
+/* =========================================================
+   FEATURE LIST
+========================================================= */
+
+.tutoring-option-list {
+  margin: 13px 0 0;
+
+  padding: 0;
+
+  list-style: none;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 8px;
+}
+
+
+/* =========================================================
+   FEATURE ITEM
+========================================================= */
+
+.tutoring-option-list-item {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 8px;
+
+  font-family: "Inter", sans-serif;
+
+  font-size: 11px;
+
+  font-weight: 400;
+
+  line-height: 1.4;
+
+  color: #182557;
+}
+
+
+/* =========================================================
+   DASH
+========================================================= */
+
+.tutoring-option-dash {
+  flex: 0 0 auto;
+
+  color: #d49a20;
+
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   BUTTON
+========================================================= */
+
+.tutoring-option-button {
+  align-self: flex-start;
+
+  margin-top: auto;
+
+  height: 29px;
+
+  padding: 0 13px;
+
+  border: none;
+
+  border-radius: 6px;
+
+  background: #182557;
+
+  color: white;
+
+  font-family: "Inter", sans-serif;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  line-height: 1;
+
+  white-space: nowrap;
+
+  cursor: pointer;
+
+  transition:
+    transform 150ms ease,
+    opacity 150ms ease;
+}
+
+
+/* =========================================================
+   BUTTON HOVER
+========================================================= */
+
+.tutoring-option-button:hover {
+  transform: translateY(-1px);
+
+  opacity: 0.94;
+}
+
+
+/* =========================================================
+   BUTTON FOCUS
+========================================================= */
+
+.tutoring-option-button:focus-visible {
+  outline: 2px solid #d49a20;
+
+  outline-offset: 3px;
+}
+
+
+/* =========================================================
+   LARGE TABLET
+   901px - 1100px
+========================================================= */
+
+@media (max-width: 1100px) {
+
+  .how-tutoring-section {
+    padding-left: 32px;
+
+    padding-right: 32px;
+  }
+
+
+  .how-tutoring-cards {
+    max-width: 900px;
+
+    gap: 14px;
+  }
+
+
+  .tutoring-option-card {
+    padding-left: 18px;
+
+    padding-right: 18px;
+  }
+
+
+  .tutoring-option-title {
+    font-size: 16px;
+  }
+
+
+  .tutoring-option-description {
+    font-size: 11px;
+  }
+
+
+  .tutoring-option-list-item {
+    font-size: 10.5px;
+  }
+
+}
+
+
+/* =========================================================
+   TABLET
+   721px - 900px
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .how-tutoring-section {
+    padding-top: 58px;
+
+    padding-bottom: 62px;
+
+    padding-left: 24px;
+
+    padding-right: 24px;
+  }
+
+
+  .how-tutoring-header {
+    max-width: 720px;
+  }
+
+
+  .how-tutoring-title {
+    font-size: 32px;
+  }
+
+
+  .how-tutoring-subtitle {
+    margin-top: 14px;
+
+    font-size: 15px;
+  }
+
+
+  .how-tutoring-cards {
+    width: 100%;
+
+    max-width: 820px;
+
+    margin-top: 25px;
+
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+
+    gap: 12px;
+  }
+
+
+  .tutoring-option-card {
+    min-height: 315px;
+
+    padding: 21px 17px 21px;
+
+    border-radius: 13px;
+  }
+
+
+  .tutoring-option-badge {
+    width: 40px;
+
+    height: 40px;
+
+    flex-basis: 40px;
+  }
+
+
+  .tutoring-option-title {
+    margin-top: 13px;
+
+    font-size: 15.5px;
+  }
+
+
+  .tutoring-option-description {
+    margin-top: 8px;
+
+    font-size: 10.5px;
+
+    line-height: 1.5;
+  }
+
+
+  .tutoring-option-list {
+    margin-top: 12px;
+
+    gap: 7px;
+  }
+
+
+  .tutoring-option-list-item {
+    gap: 7px;
+
+    font-size: 10px;
+
+    line-height: 1.4;
+  }
+
+
+  .tutoring-option-button {
+    height: 28px;
+
+    padding-left: 12px;
+
+    padding-right: 12px;
+
+    font-size: 9.5px;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL TABLET
+   601px - 720px
+========================================================= */
+
+@media (max-width: 720px) {
+
+  .how-tutoring-section {
+    padding-top: 55px;
+
+    padding-bottom: 55px;
+
+    padding-left: 20px;
+
+    padding-right: 20px;
+  }
+
+
+  .how-tutoring-eyebrow {
+    font-size: 22px;
+  }
+
+
+  .how-tutoring-title {
+    font-size: 30px;
+
+    line-height: 1.18;
+  }
+
+
+  .how-tutoring-subtitle {
+    font-size: 15px;
+  }
+
+
+  /*
+    Two columns on smaller tablets.
+    This prevents three cards from becoming
+    too narrow.
+  */
+
+  .how-tutoring-cards {
+    max-width: 620px;
+
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 14px;
+
+    margin-top: 25px;
+  }
+
+
+  .tutoring-option-card {
+    min-height: 300px;
+
+    padding: 22px 20px 22px;
+  }
+
+
+  .tutoring-option-badge {
+    width: 41px;
+
+    height: 41px;
+
+    flex-basis: 41px;
+  }
+
+
+  .tutoring-option-title {
+    font-size: 16px;
+  }
+
+
+  .tutoring-option-description {
+    font-size: 11px;
+  }
+
+
+  .tutoring-option-list-item {
+    font-size: 10.5px;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   481px - 600px
+========================================================= */
+
+@media (max-width: 600px) {
+
+  .how-tutoring-section {
+    padding-top: 50px;
+
+    padding-bottom: 50px;
+
+    padding-left: 18px;
+
+    padding-right: 18px;
+  }
+
+
+  .how-tutoring-eyebrow {
+    font-size: 21px;
+  }
+
+
+  .how-tutoring-title {
+    font-size: 29px;
+
+    line-height: 1.18;
+  }
+
+
+  .how-tutoring-subtitle {
+    margin-top: 13px;
+
+    font-size: 14px;
+  }
+
+
+  .how-tutoring-cards {
+    width: 100%;
+
+    max-width: 390px;
+
+    margin-top: 25px;
+
+    grid-template-columns: 1fr;
+
+    gap: 14px;
+  }
+
+
+  .tutoring-option-card {
+    min-height: 300px;
+
+    padding: 23px 21px 23px;
+
+    border-radius: 14px;
+  }
+
+
+  .tutoring-option-badge {
+    width: 42px;
+
+    height: 42px;
+
+    flex-basis: 42px;
+  }
+
+
+  .tutoring-option-title {
+    margin-top: 14px;
+
+    font-size: 17px;
+  }
+
+
+  .tutoring-option-description {
+    margin-top: 9px;
+
+    font-size: 11.5px;
+
+    line-height: 1.55;
+  }
+
+
+  .tutoring-option-list {
+    margin-top: 13px;
+
+    gap: 8px;
+  }
+
+
+  .tutoring-option-list-item {
+    font-size: 11px;
+
+    line-height: 1.4;
+  }
+
+
+  .tutoring-option-button {
+    height: 29px;
+
+    padding-left: 13px;
+
+    padding-right: 13px;
+
+    font-size: 10px;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 420px) {
+
+  .how-tutoring-section {
+    padding-top: 45px;
+
+    padding-bottom: 48px;
+
+    padding-left: 16px;
+
+    padding-right: 16px;
+  }
+
+
+  .how-tutoring-eyebrow {
+    font-size: 20px;
+  }
+
+
+  .how-tutoring-title {
+    font-size: 27px;
+
+    line-height: 1.2;
+  }
+
+
+  .how-tutoring-subtitle {
+    font-size: 13.5px;
+  }
+
+
+  .how-tutoring-cards {
+    max-width: 360px;
+
+    margin-top: 23px;
+
+    gap: 12px;
+  }
+
+
+  .tutoring-option-card {
+    min-height: 290px;
+
+    padding: 21px 18px 21px;
+
+    border-radius: 13px;
+  }
+
+
+  .tutoring-option-badge {
+    width: 40px;
+
+    height: 40px;
+
+    flex-basis: 40px;
+
+    border-radius: 8px;
+
+    font-size: 11px;
+  }
+
+
+  .tutoring-option-title {
+    font-size: 16px;
+  }
+
+
+  .tutoring-option-description {
+    font-size: 11px;
+
+    line-height: 1.5;
+  }
+
+
+  .tutoring-option-list {
+    gap: 7px;
+  }
+
+
+  .tutoring-option-list-item {
+    font-size: 10.5px;
+
+    gap: 7px;
+  }
+
+
+  .tutoring-option-button {
+    height: 28px;
+
+    padding-left: 12px;
+
+    padding-right: 12px;
+
+    font-size: 9.5px;
+  }
+
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media (max-width: 350px) {
+
+  .how-tutoring-section {
+    padding-left: 13px;
+
+    padding-right: 13px;
+  }
+
+
+  .how-tutoring-title {
+    font-size: 25px;
+  }
+
+
+  .how-tutoring-subtitle {
+    font-size: 13px;
+  }
+
+
+  .tutoring-option-card {
+    min-height: 280px;
+
+    padding-left: 16px;
+
+    padding-right: 16px;
+  }
+
+
+  .tutoring-option-title {
+    font-size: 15.5px;
+  }
+
+
+  .tutoring-option-description {
+    font-size: 10.5px;
+  }
+
+
+  .tutoring-option-list-item {
+    font-size: 10px;
+  }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .tutoring-option-card,
+  .tutoring-option-button {
+    transition: none;
+  }
+
+}
