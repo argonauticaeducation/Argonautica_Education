@@ -93,7 +93,7 @@ const TuitionStages = () => {
             text-[#182557]
           "
         >
-          Tuition across the Cambridge British curriculum.
+          Tuition across the Cambridge / British curriculum.
         </h2>
 
 
