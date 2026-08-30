@@ -1,13 +1,17 @@
 import { useState } from "react";
 import { supabase } from "../../lib/supabase";
-import { LogIn } from "lucide-react";
+import { LogIn, Eye, EyeOff } from "lucide-react";
+
 
 const AdminLogin = ({ onLogin }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const [showPassword, setShowPassword] = useState(false);
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,10 +21,13 @@ const AdminLogin = ({ onLogin }) => {
     setError("");
     setLoading(true);
 
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email: email.trim(),
-      password,
-    });
+
+    const { data, error } =
+      await supabase.auth.signInWithPassword({
+        email: email.trim(),
+        password,
+      });
+
 
     if (error) {
       console.error("Admin login error:", error);
@@ -33,24 +40,41 @@ const AdminLogin = ({ onLogin }) => {
       return;
     }
 
+
     if (!data?.user) {
       setError("Unable to sign in.");
       setLoading(false);
       return;
     }
 
+
     onLogin(data.user);
 
     setLoading(false);
   };
 
+
   return (
-    <div className="min-h-screen bg-[#f5f3ed] flex items-center justify-center px-5">
+    <div
+      className="
+        flex
+        min-h-screen
+        items-center
+        justify-center
+        bg-[#f5f3ed]
+        px-5
+      "
+    >
 
       <div className="w-full max-w-[430px]">
 
-        {/* LOGO / TITLE */}
+
+        {/* =====================================================
+            LOGO / TITLE
+        ===================================================== */}
+
         <div className="mb-[30px] text-center">
+
           <h1
             className="
               text-[32px]
@@ -72,10 +96,14 @@ const AdminLogin = ({ onLogin }) => {
           >
             Admin Panel
           </p>
+
         </div>
 
 
-        {/* LOGIN CARD */}
+        {/* =====================================================
+            LOGIN CARD
+        ===================================================== */}
+
         <div
           className="
             rounded-[20px]
@@ -95,6 +123,7 @@ const AdminLogin = ({ onLogin }) => {
             Admin Login
           </h2>
 
+
           <p
             className="
               mt-[7px]
@@ -106,12 +135,20 @@ const AdminLogin = ({ onLogin }) => {
           </p>
 
 
+          {/* ===================================================
+              FORM
+          =================================================== */}
+
           <form
             onSubmit={handleSubmit}
             className="mt-[28px]"
           >
 
-            {/* EMAIL */}
+
+            {/* =================================================
+                EMAIL
+            ================================================= */}
+
             <div className="mb-[20px]">
 
               <label
@@ -127,11 +164,14 @@ const AdminLogin = ({ onLogin }) => {
                 Email
               </label>
 
+
               <input
                 id="admin-email"
                 type="email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) =>
+                  setEmail(e.target.value)
+                }
                 placeholder="Admin email"
                 autoComplete="email"
                 required
@@ -148,13 +188,18 @@ const AdminLogin = ({ onLogin }) => {
                   outline-none
                   transition
                   focus:border-[#dfa92f]
+                  focus:ring-2
+                  focus:ring-[#dfa92f]/10
                 "
               />
 
             </div>
 
 
-            {/* PASSWORD */}
+            {/* =================================================
+                PASSWORD
+            ================================================= */}
+
             <div className="mb-[20px]">
 
               <label
@@ -170,36 +215,109 @@ const AdminLogin = ({ onLogin }) => {
                 Password
               </label>
 
-              <input
-                id="admin-password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Password"
-                autoComplete="current-password"
-                required
-                className="
-                  h-[48px]
-                  w-full
-                  rounded-[8px]
-                  border
-                  border-[#ddd7c9]
-                  bg-[#fffdf8]
-                  px-[14px]
-                  text-[15px]
-                  text-[#182557]
-                  outline-none
-                  transition
-                  focus:border-[#dfa92f]
-                "
-              />
+
+              {/* PASSWORD INPUT WRAPPER */}
+
+              <div className="relative">
+
+
+                <input
+                  id="admin-password"
+                  type={
+                    showPassword
+                      ? "text"
+                      : "password"
+                  }
+                  value={password}
+                  onChange={(e) =>
+                    setPassword(e.target.value)
+                  }
+                  placeholder="Password"
+                  autoComplete="current-password"
+                  required
+                  className="
+                    h-[48px]
+                    w-full
+                    rounded-[8px]
+                    border
+                    border-[#ddd7c9]
+                    bg-[#fffdf8]
+                    px-[14px]
+                    pr-[48px]
+                    text-[15px]
+                    text-[#182557]
+                    outline-none
+                    transition
+                    focus:border-[#dfa92f]
+                    focus:ring-2
+                    focus:ring-[#dfa92f]/10
+                  "
+                />
+
+
+                {/* =================================================
+                    SHOW / HIDE BUTTON
+                ================================================= */}
+
+                <button
+                  type="button"
+                  onClick={() =>
+                    setShowPassword(
+                      (previous) => !previous
+                    )
+                  }
+                  aria-label={
+                    showPassword
+                      ? "Hide password"
+                      : "Show password"
+                  }
+                  className="
+                    absolute
+                    right-[10px]
+                    top-1/2
+                    flex
+                    h-[32px]
+                    w-[32px]
+                    -translate-y-1/2
+                    items-center
+                    justify-center
+                    rounded-[6px]
+                    text-[#73788e]
+                    transition
+                    hover:bg-[#f5f3ed]
+                    hover:text-[#182557]
+                    focus:outline-none
+                    focus:ring-2
+                    focus:ring-[#dfa92f]/30
+                  "
+                >
+
+                  {showPassword ? (
+                    <EyeOff
+                      size={18}
+                      strokeWidth={1.8}
+                    />
+                  ) : (
+                    <Eye
+                      size={18}
+                      strokeWidth={1.8}
+                    />
+                  )}
+
+                </button>
+
+              </div>
 
             </div>
 
 
-            {/* ERROR */}
+            {/* =================================================
+                ERROR
+            ================================================= */}
+
             {error && (
               <div
+                role="alert"
                 className="
                   mb-[20px]
                   rounded-[8px]
@@ -216,7 +334,10 @@ const AdminLogin = ({ onLogin }) => {
             )}
 
 
-            {/* LOGIN BUTTON */}
+            {/* =================================================
+                LOGIN BUTTON
+            ================================================= */}
+
             <button
               type="submit"
               disabled={loading}
@@ -242,9 +363,14 @@ const AdminLogin = ({ onLogin }) => {
               "
             >
 
-              <LogIn size={17} />
+              <LogIn
+                size={17}
+                strokeWidth={2}
+              />
 
-              {loading ? "Signing in..." : "Sign in"}
+              {loading
+                ? "Signing in..."
+                : "Sign in"}
 
             </button>
 
@@ -257,5 +383,6 @@ const AdminLogin = ({ onLogin }) => {
     </div>
   );
 };
+
 
 export default AdminLogin;
