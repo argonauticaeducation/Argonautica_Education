@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://argonautica-education.vercel.app/sitemap.xml
+Sitemap: https://www.argonauticaeducation.com/sitemap.xml
